@@ -11,6 +11,7 @@ export async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable('dinosaurs', (table) => {
         table.integer('id').primary().notNullable()
         table.string('name').notNullable()
+        table.string('species').notNullable()
         table.string('gender').notNullable()
         table.string('digestion_period_in_hours').notNullable()
         table.boolean('herbivore').notNullable()

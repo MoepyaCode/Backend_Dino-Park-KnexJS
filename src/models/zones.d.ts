@@ -9,40 +9,39 @@ import { NextFunction, Request, Response } from "express"
  * BUT Herbivores and Carnivores cannot be in same Zone (resolve MANY TO MANY)
  */
 
-
 declare interface ZoneI {
-    location: string
+    id: string
     park_id: number
-    last_maintained: string
+    last_maintained: string | null
     is_safe: boolean
 }
 
 declare interface ZoneDaoI {
-    addZone: (location: string) => Promise<ZoneI>
-    getZone: (location: string) => Promise<ZoneI>
+    addZone: (id: string) => Promise<ZoneI | undefined>
+    getZoneById: (id: string) => Promise<ZoneI | undefined>
     getAllZones: () => Promise<ZoneI[]>
     getAllSafeZones: () => Promise<ZoneI[]>
     getAllUnSafeZones: () => Promise<ZoneI[]>
-    getNoneMaintainedZones: () => Promise<ZoneI[]>                  // Has no "last_maintained" date
+    getNullMaintainedZones: () => Promise<ZoneI[]>                  // Has no "last_maintained" date
     getMaintainedZones: () => Promise<ZoneI[]>
     getMaintenanceDueZones: () => Promise<ZoneI[]>                  // Has 7 days left before maintenance
-    updateZoneSafety: (location: string, is_safe: boolean) => Promise<ZoneI>
-    updateZoneMaintenance: (location: string, last_maintained: string) => Promise<ZoneI>
+    updateZoneSafety: (id: string, is_safe: boolean) => Promise<ZoneI | undefined>
+    updateZoneMaintenance: (id: string, last_maintained: string) => Promise<ZoneI | undefined>
 }
 
 declare interface ZoneServiceI {
-    addZone: (dto: any) => Promise<ZoneI>
-    getZone: (dto: any) => Promise<ZoneI>
+    addZone: (dto: any) => Promise<ZoneI | undefined>
+    init: () => Promise<void>
+    getZoneById: (dto: any) => Promise<ZoneI | undefined>
     getAllZones: () => Promise<ZoneI[]>
     getAllSafeZones: () => Promise<ZoneI[]>
     getAllUnSafeZones: () => Promise<ZoneI[]>
-    updateZoneSafety: (dto: any) => Promise<ZoneI>                  // Call in Events
-    updateZoneMaintenance: (dto: any) => Promise<ZoneI>             // Call in Events
+    // updateZoneSafety: (dto: any) => Promise<ZoneI | undefined>                  // Call in Events
+    // updateZoneMaintenance: (dto: any) => Promise<ZoneI | undefined>             // Call in Events
 }
 
 declare interface ZoneControllerI {
-    addZone: (request: Request, response: Response, next: NextFunction) => Promise<void>
-    getZone: (request: Request, response: Response, next: NextFunction) => Promise<void>
+    getZoneById: (request: Request, response: Response, next: NextFunction) => Promise<void>
     getAllZones: (request: Request, response: Response, next: NextFunction) => Promise<void>
     getAllSafeZones: (request: Request, response: Response, next: NextFunction) => Promise<void>
     getAllUnsafeZones: (request: Request, response: Response, next: NextFunction) => Promise<void>

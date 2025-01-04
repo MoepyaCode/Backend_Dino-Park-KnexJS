@@ -1,3 +1,7 @@
-// export * from './dinos.dao'
-// export * from './zones.dao'
-// export * from './logs.dao'
+import dinosDao from "./dinos.dao"
+import zonesDao from "./zones.dao"
+
+export {
+    zonesDao,
+    dinosDao
+}
