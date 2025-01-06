@@ -6,8 +6,8 @@ class DinoController implements DinoControllerI {
 
     getDinoById = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
         try {
-            const { params } = request
-            const dino = await dinosService.getDinoById(params)
+            const { id } = request.params
+            const dino = await dinosService.getDinoById(parseInt(id))
 
             response.json(dino)
         } catch (error) {
@@ -18,26 +18,6 @@ class DinoController implements DinoControllerI {
     getAllDinos = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
         try {
             const dinos = await dinosService.getAllDinos()
-
-            response.json(dinos)
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    getNullFedDinos = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
-        try {
-            const dinos = await dinosService.getNullFedDinos()
-
-            response.json(dinos)
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    getFedDinos = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
-        try {
-            const dinos = await dinosService.getFedDinos()
 
             response.json(dinos)
         } catch (error) {

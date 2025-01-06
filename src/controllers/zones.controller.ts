@@ -3,11 +3,11 @@ import { ZoneControllerI } from "../models";
 import { zonesService } from "../services";
 
 class ZoneController implements ZoneControllerI {
-
+    
     getZoneById = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
         try {
-            const { params } = request
-            const zone = await zonesService.getZoneById(params)
+            const { id } = request.params
+            const zone = await zonesService.getZoneById(id)
 
             response.json(zone)
         } catch (error) {
@@ -38,6 +38,16 @@ class ZoneController implements ZoneControllerI {
     getAllUnsafeZones = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
         try {
             const zones = await zonesService.getAllUnSafeZones()
+
+            response.json(zones)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    getMaintenanceDueZones= async (request: Request, response: Response, next: NextFunction): Promise<void> => {
+        try {
+            const zones = await zonesService.getMaintenanceDueZones()
 
             response.json(zones)
         } catch (error) {

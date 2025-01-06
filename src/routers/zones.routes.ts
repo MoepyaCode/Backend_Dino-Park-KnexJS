@@ -23,4 +23,9 @@ router.get('/safe', zonesController.getAllSafeZones)
  */
 router.get('/unsafe', zonesController.getAllUnsafeZones)
 
+/**
+ * GET: All maintenance due zones
+ */
+router.get('/maintenance/due', zonesController.getMaintenanceDueZones)
+
 export {router as ZonesRoutes}

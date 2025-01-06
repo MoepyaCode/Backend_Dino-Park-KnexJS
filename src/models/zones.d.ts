@@ -17,27 +17,25 @@ declare interface ZoneI {
 }
 
 declare interface ZoneDaoI {
-    addZone: (id: string) => Promise<ZoneI | undefined>
+    addZone: (id: string) => Promise<ZoneI>
     getZoneById: (id: string) => Promise<ZoneI | undefined>
     getAllZones: () => Promise<ZoneI[]>
     getAllSafeZones: () => Promise<ZoneI[]>
     getAllUnSafeZones: () => Promise<ZoneI[]>
-    getNullMaintainedZones: () => Promise<ZoneI[]>                  // Has no "last_maintained" date
-    getMaintainedZones: () => Promise<ZoneI[]>
-    getMaintenanceDueZones: () => Promise<ZoneI[]>                  // Has 7 days left before maintenance
-    updateZoneSafety: (id: string, is_safe: boolean) => Promise<ZoneI | undefined>
-    updateZoneMaintenance: (id: string, last_maintained: string) => Promise<ZoneI | undefined>
+    updateZoneSafety: (id: string, is_safe: boolean) => Promise<ZoneI>
+    updateZoneMaintenance: (id: string, last_maintained: string) => Promise<ZoneI>
 }
 
 declare interface ZoneServiceI {
-    addZone: (dto: any) => Promise<ZoneI | undefined>
+    addZone: (id: string) => Promise<ZoneI | undefined>
     init: () => Promise<void>
-    getZoneById: (dto: any) => Promise<ZoneI | undefined>
+    getZoneById: (id: string) => Promise<ZoneI>
     getAllZones: () => Promise<ZoneI[]>
     getAllSafeZones: () => Promise<ZoneI[]>
     getAllUnSafeZones: () => Promise<ZoneI[]>
-    // updateZoneSafety: (dto: any) => Promise<ZoneI | undefined>                  // Call in Events
-    // updateZoneMaintenance: (dto: any) => Promise<ZoneI | undefined>             // Call in Events
+    getMaintenanceDueZones: () => Promise<ZoneI[]>                  
+    updateZoneSafety: (id: string, is_safe: boolean) => Promise<ZoneI>                  // Call in Events
+    updateZoneMaintenance: (id: string) => Promise<ZoneI>             // Call in Events
 }
 
 declare interface ZoneControllerI {
@@ -45,4 +43,5 @@ declare interface ZoneControllerI {
     getAllZones: (request: Request, response: Response, next: NextFunction) => Promise<void>
     getAllSafeZones: (request: Request, response: Response, next: NextFunction) => Promise<void>
     getAllUnsafeZones: (request: Request, response: Response, next: NextFunction) => Promise<void>
+    getMaintenanceDueZones: (request: Request, response: Response, next: NextFunction) => Promise<void>
 }

@@ -15,33 +15,28 @@ declare interface DinoI {
 }
 
 declare interface DinoDaoI {
-    addDino: (dto: Omit<DinoI, 'location' | 'last_fed'>) => Promise<DinoI | undefined>
+    addDino: (dino: DinoI) => Promise<DinoI>
     getDinoById: (id: number) => Promise<DinoI | undefined>
+    getDinosByLocation: (location: string) => Promise<DinoI[]>
     getAllDinos: () => Promise<DinoI[]>
-    getNullFedDinos: () => Promise<DinoI[]>
-    getFedDinos: () => Promise<DinoI[]>
-    getFeedDinosDue: () => Promise<DinoI[]>                     // Has 2 hours left of Digesting
-    updateDinoLocation: (id: number, location: string) => Promise<DinoI | undefined>
-    updateDinoLastFed: (id: number, last_fed: string) => Promise<DinoI | undefined>
+    updateDinoLocation: (id: number, location: string) => Promise<DinoI>
+    updateDinoLastFed: (id: number, last_fed: string) => Promise<DinoI>
     removeDino: (id: number) => Promise<number>
 }
 
 declare interface DinoServiceI {
-    addDino: (dto: DinoI) => Promise<DinoI | undefined>
-    getDinoById: (dto) => Promise<DinoI | undefined>
+    addDino: (dino: DinoI) => Promise<DinoI>
+    getDinoById: (id: number) => Promise<DinoI>
+    getDinosByLocation: (location: string) => Promise<DinoI[]>
     getAllDinos: () => Promise<DinoI[]>
-    getNullFedDinos: () => Promise<DinoI[]>
-    getFedDinos: () => Promise<DinoI[]>
     getFeedDinosDue: () => Promise<DinoI[]>
-    // updateDinoLocation: (dto: any) => Promise<DinoI | undefined>            // Call in Events
-    // updateDinoLastFed: (dto: any) => Promise<DinoI | undefined>             // Call in Events
-    // removeDino: (dto: any) => Promise<number>                   // Call in Events
+    updateDinoLocation: (id: number, location: string) => Promise<DinoI>            // Call in Events
+    updateDinoLastFed: (id: number) => Promise<DinoI>             // Call in Events
+    removeDino: (id: number) => Promise<DinoI>                   // Call in Events
 }
 
 declare interface DinoControllerI {
     getDinoById: (request: Request, response: Response, next: NextFunction) => Promise<void>
     getAllDinos: (request: Request, response: Response, next: NextFunction) => Promise<void>
-    getNullFedDinos: (request: Request, response: Response, next: NextFunction) => Promise<void>
-    getFedDinos: (request: Request, response: Response, next: NextFunction) => Promise<void>
     getFeedDinosDue: (request: Request, response: Response, next: NextFunction) => Promise<void>
 }

@@ -6,7 +6,6 @@ export async function seed(knex: Knex): Promise<void> {
     // Deletes ALL existing entries
     await knex.raw('TRUNCATE TABLE "zones" RESTART IDENTITY CASCADE')
     await knex.raw('TRUNCATE TABLE "dinosaurs" RESTART IDENTITY CASCADE')
-    // await knex.raw('TRUNCATE TABLE "logs" RESTART IDENTITY CASCADE')
 
     // Inserts seed entries
     await knex<DinoI>(TableNames.DINOSAURS).insert([

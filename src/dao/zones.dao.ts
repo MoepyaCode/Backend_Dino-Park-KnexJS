@@ -5,7 +5,7 @@ class ZoneDao implements ZoneDaoI {
 
     private tableName = 'zones'
 
-    addZone = async (id: string): Promise<ZoneI | undefined> => {
+    addZone = async (id: string): Promise<ZoneI> => {
         return (await db<ZoneI>(this.tableName)
             .insert({ id, park_id: 1, last_maintained: null, is_safe: false })
             .returning('*'))[0]
@@ -27,25 +27,11 @@ class ZoneDao implements ZoneDaoI {
         return db<ZoneI>(this.tableName).select('*').where('is_safe', false)
     }
 
-    getNullMaintainedZones = async (): Promise<ZoneI[]> => {
-        return db<ZoneI>(this.tableName).select('*').where('last_maintained', null)
-    }
-
-    // review
-    getMaintainedZones = async (): Promise<ZoneI[]> => {
-        return db<ZoneI>(this.tableName).select('*').where('last_maintained', null)
-    }
-
-    // review
-    getMaintenanceDueZones = async (): Promise<ZoneI[]> => {
-        return db<ZoneI>(this.tableName).select('*').where('last_maintained', null)
-    }
-
-    updateZoneSafety = async (id: string, is_safe: boolean): Promise<ZoneI | undefined> => {
+    updateZoneSafety = async (id: string, is_safe: boolean): Promise<ZoneI> => {
         return db<ZoneI>(this.tableName).where('id', id).update({ is_safe })
     }
 
-    updateZoneMaintenance = async (id: string, last_maintained: string): Promise<ZoneI | undefined> => {
+    updateZoneMaintenance = async (id: string, last_maintained: string): Promise<ZoneI> => {
         return db<ZoneI>(this.tableName).where('id', id).update({ last_maintained })
     }
 

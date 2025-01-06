@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
-import { DinosRoutes, ZonesRoutes } from './routers'
+import { DinosRoutes, EventsRoutes, ZonesRoutes } from './routers'
 import { GlobalErrorHandler } from './errors'
 
 const app = express()
@@ -18,7 +18,7 @@ app.use(express.json())
  */
 app.use('/zones', ZonesRoutes)
 app.use('/dinos', DinosRoutes)
-app.use('/events', DinosRoutes)
+app.use('/events', EventsRoutes)
 
 /**
  * ERROR HANDLING

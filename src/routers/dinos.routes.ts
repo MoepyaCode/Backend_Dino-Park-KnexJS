@@ -14,16 +14,6 @@ router.get('/id/:id', dinosController.getDinoById)
 router.get('/', dinosController.getAllDinos)
 
 /**
- * GET: All Null Fed Dinos
- */
-router.get('/last_fed/null', dinosController.getNullFedDinos)
-
-/**
- * GET: All Fed Dinos
- */
-router.get('/last_fed/recent', dinosController.getFedDinos)
-
-/**
  * GET: All Dinos Due for Feeding
  */
 router.get('/last_fed/due', dinosController.getFeedDinosDue)

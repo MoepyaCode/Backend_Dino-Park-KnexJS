@@ -13,7 +13,7 @@ export async function up(knex: Knex): Promise<void> {
         table.string('name').notNullable()
         table.string('species').notNullable()
         table.string('gender').notNullable()
-        table.string('digestion_period_in_hours').notNullable()
+        table.integer('digestion_period_in_hours').notNullable()
         table.boolean('herbivore').notNullable()
         table.integer('park_id').notNullable()
         table.string('location').unsigned().nullable()
@@ -26,12 +26,9 @@ export async function up(knex: Knex): Promise<void> {
             .inTable('zones')
             .onDelete('SET NULL')
     })
-    // knex.schema.createTable('logs', (table) => {
-    // })
 }
 
 export async function down(knex: Knex): Promise<void> {
-    await knex.schema.dropTableIfExists('zones')
     await knex.schema.dropTableIfExists('dinosaurs')
-    // knex.schema.dropTableIfExists('logs')
+    await knex.schema.dropTableIfExists('zones')
 }

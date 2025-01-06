@@ -15,8 +15,8 @@ declare enum EventTypes {
 type DinoBaseEvent = {
     kind: EventTypes
     dinosaur_id: number
-    park_id: number
     time: string
+    location?: string
 }
 
 declare type MaintenancePerformedEvent = {
@@ -26,21 +26,29 @@ declare type MaintenancePerformedEvent = {
     time: string
 }
 
-declare type DinoAddedEvent = Omit<DinoBaseEvent, 'dinosaur_id'> & Omit<DinoI, 'park_id' | 'time' | 'last_fed' | 'location'>
+declare type DinoAddedEvent = Omit<DinoBaseEvent, 'dinosaur_id'> & Omit<DinoI, | 'time' | 'last_fed' | 'location'>
 
-declare type DinoLocationUpdatedEvent = DinoBaseEvent & { location: string }
+declare type DinoLocationUpdatedEvent = DinoBaseEvent
 
 declare type DinoFedEvent = DinoBaseEvent
 
 declare type DinoRemovedEvent = DinoBaseEvent
 
+declare type EventFeedTypes = DinoAddedEvent | DinoLocationUpdatedEvent | DinoFedEvent | DinoRemovedEvent | MaintenancePerformedEvent
+
+declare type EventReturn = {
+    dino: DinoI
+    zone?: ZoneI
+    prevZone?: ZoneI
+}
+
 interface EventServiceI {
-    dinoAdded: () => Promise<void>
-    dinoLocationUpdated: () => Promise<void>
-    dinoFedUpdated: () => Promise<void>
-    dinoRemoved: () => Promise<void>
-    maintenancePerformed: () => Promise<void>
-    sync: () => Promise<void>
+    dinoAdded: (event: DinoAddedEvent) => Promise<EventReturn>
+    dinoLocationUpdated: (event: DinoLocationUpdatedEvent) => Promise<EventReturn>
+    dinoFedUpdated: (event: DinoFedEvent) => Promise<EventReturn>
+    dinoRemoved: (event: DinoRemovedEvent) => Promise<EventReturn>
+    maintenancePerformed: (event: MaintenancePerformedEvent) => Promise<ZoneI>
+    sync: () => Promise<boolean>
 }
 
 interface EventControllerI {
