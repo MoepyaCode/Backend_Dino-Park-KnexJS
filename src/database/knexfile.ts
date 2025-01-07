@@ -5,6 +5,8 @@ import type { Knex } from "knex";
 const config: Knex.Config = {
   client: "postgresql",
   connection: {
+    host: "localhost",
+    port: 5433,
     database: "dino_park_db",
     user: "root",
     password: "rootpassword"
